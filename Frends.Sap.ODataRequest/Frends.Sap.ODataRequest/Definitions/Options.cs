@@ -20,5 +20,5 @@ public class Options
     /// Specifies the cipher suites allowed for TLS. Use only with Linux system with OpenSSL 1.1.1 or higher or a macOS
     /// </summary>
     /// <example>false</example>
-    public List<TlsCipherSuite> Policices { get; init; } = new ();
+    public List<TlsCipherSuite> Policices { get; init; } = new();
 }
