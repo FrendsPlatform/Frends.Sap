@@ -1,18 +1,22 @@
 namespace Frends.Sap.ODataRequest.Tests.tests;
 
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 public class Tests : TestsBase
 {
     [Test]
-    public void RequestReturnSuccess()
+    public async Task RequestReturnSuccess()
     {
-        Assert.IsTrue(true);
+        var result = await Sap.ODataRequest(BasicInput(), CancellationToken.None);
+        Assert.AreEqual(200, result.StatusCode);
     }
 
     [Test]
-    public void ThrowIfInvalidInputParameters()
+    public async Task RequestWithQueryReturnSuccess()
     {
-        Assert.IsTrue(true);
+        var result = await Sap.ODataRequest(InputWithQuery(), CancellationToken.None);
+        Assert.AreEqual(200, result.StatusCode);
     }
 }

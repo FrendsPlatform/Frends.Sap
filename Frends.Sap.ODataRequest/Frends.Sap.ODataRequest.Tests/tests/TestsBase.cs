@@ -1,8 +1,10 @@
 namespace Frends.Sap.ODataRequest.Tests.tests;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using dotenv.net;
+using Frends.Sap.ODataRequest.Definitions;
 using NUnit.Framework;
 
 [TestFixture]
@@ -11,7 +13,7 @@ public abstract class TestsBase
     protected static readonly string Username = Environment.GetEnvironmentVariable("USERNAME");
     protected static readonly string Password = Environment.GetEnvironmentVariable("PASSWORD");
     protected static readonly string Host = Environment.GetEnvironmentVariable("HOST");
-    protected static readonly string Port = Environment.GetEnvironmentVariable("PORT");
+    protected static readonly int Port = int.Parse(Environment.GetEnvironmentVariable("PORT"));
 
     [OneTimeSetUp]
     public static void AssemblyInit()
@@ -22,4 +24,27 @@ public abstract class TestsBase
             options: new DotEnvOptions(
                 envFilePaths: new[] { $"{projDir}{Path.DirectorySeparatorChar}.env.local" }));
     }
+
+    protected static Input BasicInput() =>
+        new()
+        {
+            Username = Username,
+            Password = Password,
+            HostAddress = Host,
+            Port = Port,
+            ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
+            EntitySetName = "C_AbpPaymentBatch",
+        };
+
+    protected static Input InputWithQuery() =>
+        new()
+        {
+            Username = Username,
+            Password = Password,
+            HostAddress = Host,
+            Port = Port,
+            ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
+            EntitySetName = "C_AbpPaymentBatch",
+            QueryParameters = new Dictionary<string, string> { { "$top", "3" }, },
+        };
 }

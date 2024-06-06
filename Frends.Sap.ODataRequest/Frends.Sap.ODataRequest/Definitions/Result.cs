@@ -12,8 +12,8 @@ public class Result
     public int StatusCode { get; init; }
 
     /// <summary>
-    /// Body of the response represented as JToken
+    /// Body of the response
     /// </summary>
     /// <example>{ "id": 123 }</example>
-    public dynamic Content { get; init; }
+    public string Content { get; init; }
 }
