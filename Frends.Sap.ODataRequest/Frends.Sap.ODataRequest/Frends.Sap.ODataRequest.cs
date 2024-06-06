@@ -46,8 +46,7 @@ public static class Sap
                     sender,
                     cert,
                     chain,
-                    sslPolicyErrors
-                ) =>
+                    sslPolicyErrors) =>
                 {
                     return true;
                 },
