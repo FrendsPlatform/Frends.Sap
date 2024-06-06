@@ -4,6 +4,8 @@ using System;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,15 +37,30 @@ public static class Sap
 
     private static HttpClient GetAuthorizedClient(Input input)
     {
-        HttpClientHandler clientHandler =
+        SocketsHttpHandler clientHandler =
             new()
             {
-                ServerCertificateCustomValidationCallback = (_, _, _, _) =>
+                SslOptions = new System.Net.Security.SslClientAuthenticationOptions
                 {
-                    return true;
+                    RemoteCertificateValidationCallback = (_, _, _, _) =>
+                    {
+                        return true;
+                    },
+                    EnabledSslProtocols = SslProtocols.Tls12,
+                    CipherSuitesPolicy = new CipherSuitesPolicy(
+                        new[]
+                        {
+                            TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+                            TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                            TlsCipherSuite.TLS_RSA_WITH_AES_256_GCM_SHA384,
+                            TlsCipherSuite.TLS_RSA_WITH_AES_128_GCM_SHA256,
+                            TlsCipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA,
+                            TlsCipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
+                        }),
                 },
             };
         var client = new HttpClient(clientHandler);
+
         var authenticationString = $"{input.Username}:{input.Password}";
         var base64EncodedAuthenticationString = Convert.ToBase64String(
             Encoding.ASCII.GetBytes(authenticationString));
