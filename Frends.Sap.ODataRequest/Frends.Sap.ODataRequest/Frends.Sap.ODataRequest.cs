@@ -22,43 +22,40 @@ public static class Sap
     /// [Documentation](https://tasks.frends.com/tasks/frends-tasks/Frends.Sap.ODataRequest).
     /// </summary>
     /// <param name="input">inpup params.</param>
+    /// <param name="options">options params.</param>
     /// <param name="cancellationToken">Cancellation token given by Frends.</param>
     /// <returns>Object { bool StatusCode, dynamic Content }.</returns>
     public static async Task<Result> ODataRequest(
         [PropertyTab] Input input,
+        [PropertyTab] Options options,
         CancellationToken cancellationToken)
     {
-        var client = GetAuthorizedClient(input);
+        var client = GetAuthorizedClient(input, options);
         var uri = GetFullUri(input);
         var response = await client.GetAsync(uri, cancellationToken);
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
         return new Result { StatusCode = (int)response.StatusCode, Content = responseContent, };
     }
 
-    private static HttpClient GetAuthorizedClient(Input input)
+    private static HttpClient GetAuthorizedClient(Input input, Options options)
     {
-        SocketsHttpHandler clientHandler =
-            new()
-            {
-                SslOptions = new System.Net.Security.SslClientAuthenticationOptions
-                {
-                    RemoteCertificateValidationCallback = (_, _, _, _) =>
-                    {
-                        return true;
-                    },
-                    EnabledSslProtocols = SslProtocols.Tls12,
-                    CipherSuitesPolicy = new CipherSuitesPolicy(
-                        new[]
-                        {
-                            TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-                            TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                            TlsCipherSuite.TLS_RSA_WITH_AES_256_GCM_SHA384,
-                            TlsCipherSuite.TLS_RSA_WITH_AES_128_GCM_SHA256,
-                            TlsCipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA,
-                            TlsCipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
-                        }),
-                },
-            };
+        var clientHandler = new SocketsHttpHandler();
+
+        var sslOptions = new SslClientAuthenticationOptions()
+        {
+            EnabledSslProtocols = SslProtocols.Tls12,
+        };
+        if (options.DisableSsl)
+        {
+            sslOptions.RemoteCertificateValidationCallback = (_, _, _, _) => true;
+        }
+
+        if (options.Policices.Count > 0)
+        {
+            sslOptions.CipherSuitesPolicy = new CipherSuitesPolicy(options.Policices);
+        }
+
+        clientHandler.SslOptions = sslOptions;
         var client = new HttpClient(clientHandler);
 
         var authenticationString = $"{input.Username}:{input.Password}";

@@ -9,14 +9,17 @@ public class Tests : TestsBase
     [Test]
     public async Task RequestReturnSuccess()
     {
-        var result = await Sap.ODataRequest(BasicInput(), CancellationToken.None);
+        var result = await Sap.ODataRequest(BasicInput(), TestOptions(), CancellationToken.None);
         Assert.AreEqual(200, result.StatusCode);
     }
 
     [Test]
     public async Task RequestWithQueryReturnSuccess()
     {
-        var result = await Sap.ODataRequest(InputWithQuery(), CancellationToken.None);
+        var result = await Sap.ODataRequest(
+            InputWithQuery(),
+            TestOptions(),
+            CancellationToken.None);
         Assert.AreEqual(200, result.StatusCode);
     }
 }

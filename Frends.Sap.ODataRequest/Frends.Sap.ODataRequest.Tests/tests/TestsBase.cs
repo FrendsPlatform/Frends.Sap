@@ -3,9 +3,12 @@ namespace Frends.Sap.ODataRequest.Tests.tests;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Security;
+using System.Runtime.InteropServices;
 using dotenv.net;
 using Frends.Sap.ODataRequest.Definitions;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 [TestFixture]
 public abstract class TestsBase
@@ -47,4 +50,28 @@ public abstract class TestsBase
             EntitySetName = "C_AbpPaymentBatch",
             QueryParameters = new Dictionary<string, string> { { "$top", "3" }, },
         };
+
+    protected static Options TestOptions()
+    {
+        if (RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+        {
+            return new Options { DisableSsl = true };
+        }
+        else
+        {
+            return new Options
+            {
+                DisableSsl = true,
+                Policices = new List<TlsCipherSuite>
+                {
+                    TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+                    TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                    TlsCipherSuite.TLS_RSA_WITH_AES_256_GCM_SHA384,
+                    TlsCipherSuite.TLS_RSA_WITH_AES_128_GCM_SHA256,
+                    TlsCipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA,
+                    TlsCipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA,
+                },
+            };
+        }
+    }
 }
