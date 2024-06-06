@@ -58,7 +58,6 @@ public static class Sap
         var baseUri = new Uri(
             $"{input.HostAddress}:{input.Port}/{Constants.ODataPrefix.Trim('/')}/{input.ServiceName.Trim('/')}/{input.EntitySetName.Trim('/')}");
 
-
         var uriBuilder = new UriBuilder(baseUri);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
         foreach (var param in input.QueryParameters)
