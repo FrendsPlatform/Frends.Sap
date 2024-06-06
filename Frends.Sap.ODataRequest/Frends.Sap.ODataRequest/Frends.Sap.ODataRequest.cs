@@ -40,7 +40,7 @@ public static class Sap
     private static HttpClient GetAuthorizedClient(Input input)
     {
         HttpClientHandler clientHandler =
-            new()
+            new ()
             {
                 ServerCertificateCustomValidationCallback = (
                     sender,

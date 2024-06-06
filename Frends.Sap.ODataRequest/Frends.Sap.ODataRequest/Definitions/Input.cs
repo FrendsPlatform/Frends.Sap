@@ -49,5 +49,5 @@ public class Input
     /// Query parameters from which query string will be constructed.
     /// </summary>
     /// <example>{ {skip, 1}, {format, xlsx} }</example>
-    public Dictionary<string, string> QueryParameters { get; init; } = [];
+    public Dictionary<string, string> QueryParameters { get; init; } = new Dictionary<string, string>();
 }
