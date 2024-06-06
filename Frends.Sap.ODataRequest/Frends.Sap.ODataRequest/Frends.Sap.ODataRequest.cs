@@ -24,8 +24,7 @@ public static class Sap
     /// <returns>Object { bool StatusCode, dynamic Content }.</returns>
     public static async Task<Result> ODataRequest(
         [PropertyTab] Input input,
-        CancellationToken cancellationToken
-    )
+        CancellationToken cancellationToken)
     {
         var client = GetAuthorizedClient(input);
         var uri = GetFullUri(input);
@@ -47,20 +46,17 @@ public static class Sap
         var client = new HttpClient(clientHandler);
         var authenticationString = $"{input.Username}:{input.Password}";
         var base64EncodedAuthenticationString = Convert.ToBase64String(
-            Encoding.ASCII.GetBytes(authenticationString)
-        );
+            Encoding.ASCII.GetBytes(authenticationString));
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
             "Basic",
-            base64EncodedAuthenticationString
-        );
+            base64EncodedAuthenticationString);
         return client;
     }
 
     private static Uri GetFullUri(Input input)
     {
         var baseUri = new Uri(
-            $"{input.HostAddress}:{input.Port}/{Constants.ODataPrefix.Trim('/')}/{input.ServiceName.Trim('/')}/{input.EntitySetName.Trim('/')}"
-        );
+            $"{input.HostAddress}:{input.Port}/{Constants.ODataPrefix.Trim('/')}/{input.ServiceName.Trim('/')}/{input.EntitySetName.Trim('/')}");
 
         var uriBuilder = new UriBuilder(baseUri);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
