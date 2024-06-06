@@ -45,6 +45,6 @@ public abstract class TestsBase
             Port = Port,
             ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
             EntitySetName = "C_AbpPaymentBatch",
-            QueryParameters = new Dictionary<string, string> { { "$top", "5" }, },
+            QueryParameters = new Dictionary<string, string> { { "$top", "3" }, },
         };
 }
