@@ -1,6 +1,6 @@
 # Frends.Sap.ODataRequest
 
-Task to make request to OData SAP.
+Task to make requests to SAP OData API.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Build](https://github.com/FrendsPlatform/Frends.Sap/actions/workflows/ODataRequest_build_and_test_on_main.yml/badge.svg)](https://github.com/FrendsPlatform/Frends.Sap/actions)

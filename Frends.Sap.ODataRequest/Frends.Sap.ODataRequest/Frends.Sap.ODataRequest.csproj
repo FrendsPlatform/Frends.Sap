@@ -11,7 +11,7 @@
 	  <PackageTags>Frends</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	  <Description>Task to make request to OData SAP.</Description>
+	  <Description>Task to make requests to SAP OData API.</Description>
 	  <PackageProjectUrl>https://frends.com/</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/FrendsPlatform/Frends.Sap/tree/main/Frends.Sap.ODataRequest</RepositoryUrl>
   </PropertyGroup>

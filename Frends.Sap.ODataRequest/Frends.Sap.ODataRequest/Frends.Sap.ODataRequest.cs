@@ -18,10 +18,10 @@ using Frends.Sap.ODataRequest.Definitions;
 public static class Sap
 {
     /// <summary>
-    /// Task to request OData.
+    /// Task to make a request to SAP OData API.
     /// [Documentation](https://tasks.frends.com/tasks/frends-tasks/Frends.Sap.ODataRequest).
     /// </summary>
-    /// <param name="input">inpup params.</param>
+    /// <param name="input">input params.</param>
     /// <param name="options">options params.</param>
     /// <param name="cancellationToken">Cancellation token given by Frends.</param>
     /// <returns>Object { bool StatusCode, dynamic Content }.</returns>
@@ -34,7 +34,7 @@ public static class Sap
         var uri = GetFullUri(input);
         var response = await client.GetAsync(uri, cancellationToken);
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-        return new Result { StatusCode = (int)response.StatusCode, Content = responseContent, };
+        return new Result { StatusCode = (int)response.StatusCode, Data = responseContent, };
     }
 
     private static HttpClient GetAuthorizedClient(Input input, Options options)
@@ -45,7 +45,7 @@ public static class Sap
         {
             EnabledSslProtocols = SslProtocols.Tls12,
         };
-        if (options.DisableSsl)
+        if (options.AcceptAnyCertificate)
         {
             sslOptions.RemoteCertificateValidationCallback = (_, _, _, _) => true;
         }

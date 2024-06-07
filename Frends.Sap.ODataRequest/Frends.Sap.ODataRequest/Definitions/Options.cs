@@ -10,15 +10,20 @@ using System.Net.Security;
 public class Options
 {
     /// <summary>
-    /// Option supress RemoteCertificateValidationCallback, which disables ssl checking
+    /// Option supress RemoteCertificateValidationCallback, which accepts any certificate.
     /// </summary>
     /// <example>false</example>
     [DefaultValue(false)]
-    public bool DisableSsl { get; init; }
+    public bool AcceptAnyCertificate { get; init; }
 
     /// <summary>
-    /// Specifies the cipher suites allowed for TLS. Use only with Linux system with OpenSSL 1.1.1 or higher or a macOS
+    /// Use when your system's default cipher set does not include SAP ciphers by default, for example on Linux with OpenSSL 1.1.1 default installation.
     /// </summary>
-    /// <example>false</example>
+    /// <example>
+    /// [
+    ///   "TlsCipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA",
+    ///   "TlsCipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA"
+    /// ]
+    /// </example>
     public List<TlsCipherSuite> Policices { get; init; } = new();
 }

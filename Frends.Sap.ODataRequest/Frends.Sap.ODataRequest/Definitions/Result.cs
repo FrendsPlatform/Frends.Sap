@@ -15,5 +15,5 @@ public class Result
     /// Body of the response
     /// </summary>
     /// <example>{ "id": 123 }</example>
-    public string Content { get; init; }
+    public string Data { get; init; }
 }

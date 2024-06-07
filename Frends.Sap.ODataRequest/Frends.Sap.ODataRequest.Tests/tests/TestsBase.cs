@@ -55,13 +55,13 @@ public abstract class TestsBase
     {
         if (RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
         {
-            return new Options { DisableSsl = true };
+            return new Options { AcceptAnyCertificate = true };
         }
         else
         {
             return new Options
             {
-                DisableSsl = true,
+                AcceptAnyCertificate = true,
                 Policices = new List<TlsCipherSuite>
                 {
                     TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,

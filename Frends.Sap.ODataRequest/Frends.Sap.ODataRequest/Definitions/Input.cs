@@ -24,30 +24,34 @@ public class Input
     /// <summary>
     /// Host Address.
     /// </summary>
-    /// <example>adres.to.connect.com</example>
+    /// <example>example.com</example>
+    [DefaultValue("example.com")]
     public string HostAddress { get; init; }
 
     /// <summary>
     /// Port to connect.
     /// </summary>
-    /// <example>42137</example>
+    /// <example>44301</example>
+    [DefaultValue(44301)]
     public int Port { get; init; }
 
     /// <summary>
     /// Service name.
     /// </summary>
     /// <example>PAYMENTS</example>
+    [DefaultValue("FAP_APPROVEBANKPAYMENTS_SRV")]
     public string ServiceName { get; init; }
 
     /// <summary>
     /// Entity set name.
     /// </summary>
     /// <example>A_Set</example>
+    [DefaultValue("C_AbpPaymentBatch")]
     public string EntitySetName { get; init; }
 
     /// <summary>
     /// Query parameters from which query string will be constructed.
     /// </summary>
-    /// <example>{ { "skip", "1" }, { "format", "xlsx" } }</example>
+    /// <example>{ { "$skip", "1" }, { "$format", "xlsx" } }</example>
     public Dictionary<string, string> QueryParameters { get; init; } = new();
 }
