@@ -20,10 +20,11 @@ public class Options
     /// Use when your system's default cipher set does not include SAP ciphers by default, for example on Linux with OpenSSL 1.1.1 default installation.
     /// </summary>
     /// <example>
-    /// [
-    ///   "TlsCipherSuite.TLS_RSA_WITH_AES_256_CBC_SHA",
-    ///   "TlsCipherSuite.TLS_RSA_WITH_AES_128_CBC_SHA"
-    /// ]
+    /// new List&lt;System.Net.Security.TlsCipherSuite&gt;
+    /// {
+    ///     System.Net.Security.TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+    ///     System.Net.Security.TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    /// }
     /// </example>
-    public List<TlsCipherSuite> Policices { get; init; } = new();
+    public List<TlsCipherSuite> Policies { get; init; } = new();
 }

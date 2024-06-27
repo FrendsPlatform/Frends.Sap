@@ -50,9 +50,9 @@ public static class Sap
             sslOptions.RemoteCertificateValidationCallback = (_, _, _, _) => true;
         }
 
-        if (options.Policices.Count > 0)
+        if (options.Policies?.Count > 0)
         {
-            sslOptions.CipherSuitesPolicy = new CipherSuitesPolicy(options.Policices);
+            sslOptions.CipherSuitesPolicy = new CipherSuitesPolicy(options.Policies);
         }
 
         clientHandler.SslOptions = sslOptions;
