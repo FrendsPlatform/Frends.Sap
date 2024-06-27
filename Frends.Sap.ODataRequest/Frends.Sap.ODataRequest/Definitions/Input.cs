@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static Frends.Sap.ODataRequest.Definitions.Constants;
 
 /// <summary>
 /// Input parameters.
@@ -60,4 +61,11 @@ public class Input
     /// </summary>
     /// <example>new Dictionary&lt;string, string&gt;{ { "$skip", "1" }, { "$format", "xlsx" } }</example>
     public Dictionary<string, string> QueryParameters { get; init; } = new();
+
+    /// <summary>
+    /// Select if response should be in xml or json format
+    /// </summary>
+    /// <example>ResponseFormat.Json</example>
+    [DefaultValue(ResponseFormat.Json)]
+    public ResponseFormat ResponseFormat { get; init; }
 }
