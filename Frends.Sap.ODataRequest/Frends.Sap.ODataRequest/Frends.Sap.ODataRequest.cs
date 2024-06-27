@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Frends.Sap.ODataRequest.Definitions;
+using static Frends.Sap.ODataRequest.Definitions.Constants;
 
 /// <summary>
 /// Sap Task.
@@ -31,6 +32,7 @@ public static class Sap
         CancellationToken cancellationToken)
     {
         var client = GetAuthorizedClient(input, options);
+        client.SetResponseFormat(input.ResponseFormat);
         var uri = GetFullUri(input);
         var response = await client.GetAsync(uri, cancellationToken);
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -50,9 +52,9 @@ public static class Sap
             sslOptions.RemoteCertificateValidationCallback = (_, _, _, _) => true;
         }
 
-        if (options.Policices.Count > 0)
+        if (options.Policies?.Count > 0)
         {
-            sslOptions.CipherSuitesPolicy = new CipherSuitesPolicy(options.Policices);
+            sslOptions.CipherSuitesPolicy = new CipherSuitesPolicy(options.Policies);
         }
 
         clientHandler.SslOptions = sslOptions;
@@ -65,6 +67,21 @@ public static class Sap
             "Basic",
             base64EncodedAuthenticationString);
         return client;
+    }
+
+    private static void SetResponseFormat(this HttpClient client, ResponseFormat selectedFormat)
+    {
+        switch (selectedFormat)
+        {
+            case ResponseFormat.Json:
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                return;
+            case ResponseFormat.Xml:
+                client.DefaultRequestHeaders.Add("Accept", "application/xml");
+                return;
+            default:
+                throw new InvalidEnumArgumentException("Response format must be specified");
+        }
     }
 
     private static Uri GetFullUri(Input input)

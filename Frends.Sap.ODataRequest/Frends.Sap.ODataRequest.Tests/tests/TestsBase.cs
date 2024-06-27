@@ -9,6 +9,7 @@ using dotenv.net;
 using Frends.Sap.ODataRequest.Definitions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using static Frends.Sap.ODataRequest.Definitions.Constants;
 
 [TestFixture]
 public abstract class TestsBase
@@ -37,6 +38,18 @@ public abstract class TestsBase
             Port = Port,
             ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
             EntitySetName = "C_AbpPaymentBatch",
+            ResponseFormat = ResponseFormat.Json,
+        };
+
+    protected static Input InputWithoutResponseFormat() =>
+        new()
+        {
+            Username = Username,
+            Password = Password,
+            HostAddress = Host,
+            Port = Port,
+            ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
+            EntitySetName = "C_AbpPaymentBatch",
         };
 
     protected static Input InputWithQuery() =>
@@ -49,20 +62,21 @@ public abstract class TestsBase
             ServiceName = "FAP_APPROVEBANKPAYMENTS_SRV",
             EntitySetName = "C_AbpPaymentBatch",
             QueryParameters = new Dictionary<string, string> { { "$top", "3" }, },
+            ResponseFormat = ResponseFormat.Json,
         };
 
     protected static Options TestOptions()
     {
         if (RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
         {
-            return new Options { AcceptAnyCertificate = true };
+            return new Options { AcceptAnyCertificate = true, Policies = null };
         }
         else
         {
             return new Options
             {
                 AcceptAnyCertificate = true,
-                Policices = new List<TlsCipherSuite>
+                Policies = new List<TlsCipherSuite>
                 {
                     TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
                     TlsCipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,

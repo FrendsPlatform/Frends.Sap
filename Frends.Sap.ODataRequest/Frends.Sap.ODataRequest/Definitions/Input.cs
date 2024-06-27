@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using static Frends.Sap.ODataRequest.Definitions.Constants;
 
 /// <summary>
 /// Input parameters.
@@ -12,6 +14,7 @@ public class Input
     /// Username used to connect with Basic Auth.
     /// </summary>
     /// <example>user1</example>
+    [DisplayFormat(DataFormatString = "Text")]
     public string Username { get; init; }
 
     /// <summary>
@@ -26,6 +29,7 @@ public class Input
     /// </summary>
     /// <example>example.com</example>
     [DefaultValue("example.com")]
+    [DisplayFormat(DataFormatString = "Text")]
     public string HostAddress { get; init; }
 
     /// <summary>
@@ -33,6 +37,7 @@ public class Input
     /// </summary>
     /// <example>44301</example>
     [DefaultValue(44301)]
+    [DisplayFormat(DataFormatString = "Text")]
     public int Port { get; init; }
 
     /// <summary>
@@ -40,6 +45,7 @@ public class Input
     /// </summary>
     /// <example>PAYMENTS</example>
     [DefaultValue("FAP_APPROVEBANKPAYMENTS_SRV")]
+    [DisplayFormat(DataFormatString = "Text")]
     public string ServiceName { get; init; }
 
     /// <summary>
@@ -47,11 +53,19 @@ public class Input
     /// </summary>
     /// <example>A_Set</example>
     [DefaultValue("C_AbpPaymentBatch")]
+    [DisplayFormat(DataFormatString = "Text")]
     public string EntitySetName { get; init; }
 
     /// <summary>
     /// Query parameters from which query string will be constructed.
     /// </summary>
-    /// <example>{ { "$skip", "1" }, { "$format", "xlsx" } }</example>
+    /// <example>new Dictionary&lt;string, string&gt;{ { "$skip", "1" }, { "$format", "xlsx" } }</example>
     public Dictionary<string, string> QueryParameters { get; init; } = new();
+
+    /// <summary>
+    /// Select if response should be in xml or json format
+    /// </summary>
+    /// <example>ResponseFormat.Json</example>
+    [DefaultValue(ResponseFormat.Json)]
+    public ResponseFormat ResponseFormat { get; init; }
 }
